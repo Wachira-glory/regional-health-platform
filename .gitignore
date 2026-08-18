@@ -1,41 +1,7 @@
-# Terraform
+.terraform/
 *.tfstate
 *.tfstate.*
-.terraform/
-.terraform.lock.hcl
 *.tfvars
 !*.tfvars.example
-
-# Secrets / env
 .env
 .env.*
-!.env.example
-
-# OS/editor
-.DS_Store
-*.swp
-
-# LocalStack
-.localstack/
-volume/
-EOFcat > .gitignore << 'EOF'
-# Terraform
-*.tfstate
-*.tfstate.*
-.terraform/
-.terraform.lock.hcl
-*.tfvars
-!*.tfvars.example
-
-# Secrets / env
-.env
-.env.*
-!.env.example
-
-# OS/editor
-.DS_Store
-*.swp
-
-# LocalStack
-.localstack/
-volume/
