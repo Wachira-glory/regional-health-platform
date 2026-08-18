@@ -1,0 +1,31 @@
+variable "ami_id" {
+  description = "AMI for the app instance"
+  type        = string
+  default     = "ami-df5de72bdb3b"
+}
+variable "instance_type" {
+  type    = string
+  default = "t3.small"
+}
+variable "secret_arn" {
+  description = "Secrets Manager ARN from modules/data"
+  type        = string
+}
+variable "app_container_memory" {
+  type    = string
+  default = "512m"
+}
+variable "app_port" {
+  type    = number
+  default = 3000
+}
+variable "nginx_port" {
+  type    = number
+  default = 80
+}
+
+variable "create_lb" {
+  description = "Create the ALB. Default false: LocalStack freemium license doesn't support elbv2 (see FIDELITY.md)."
+  type        = bool
+  default     = false
+}
