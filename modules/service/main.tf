@@ -23,7 +23,7 @@ resource "aws_security_group" "app" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.allowed_egress_cidrs
   }
 }
 
@@ -31,6 +31,14 @@ resource "aws_instance" "app" {
   ami                    = var.ami_id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.app.id]
+
+  metadata_options {
+    http_tokens = "required"
+  }
+
+  root_block_device {
+    encrypted = true
+  }
 
   user_data = templatefile("${path.module}/user-data.sh.tpl", {
     secret_arn           = var.secret_arn

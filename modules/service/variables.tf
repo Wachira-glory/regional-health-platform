@@ -38,3 +38,13 @@ variable "allowed_ingress_cidrs" {
     error_message = "allowed_ingress_cidrs must contain at least one CIDR block."
   }
 }
+
+variable "allowed_egress_cidrs" {
+  description = "CIDR blocks the service is allowed to reach for outbound traffic."
+  type        = list(string)
+
+  validation {
+    condition     = length(var.allowed_egress_cidrs) > 0
+    error_message = "allowed_egress_cidrs must contain at least one CIDR block."
+  }
+}
