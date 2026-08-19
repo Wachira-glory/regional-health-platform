@@ -1,0 +1,40 @@
+==> Checking Terraform formatting
+==> Validating Terraform modules
+[32m[1mSuccess![0m The configuration is valid.
+[0m
+[32m[1mSuccess![0m The configuration is valid.
+[0m
+==> Running Gitleaks
+[90m7:39PM[0m [32mINF[0m [1m5 commits scanned.[0m
+[90m7:39PM[0m [32mINF[0m [1mscanned ~16892 bytes (16.89 KB) in 680ms[0m
+[90m7:39PM[0m [32mINF[0m [1mno leaks found[0m
+==> Running Trivy IaC scan
+2026-08-19T19:39:15+03:00	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-19T19:39:15+03:00	INFO	[checks-client] Using existing checks from cache	path="/Users/hawaahmajid/Library/Caches/trivy/policy/content"
+2026-08-19T19:39:17+03:00	INFO	[terraform scanner] Scanning root module	file_path="modules/data"
+2026-08-19T19:39:17+03:00	WARN	[terraform parser] Variable values were not found in the environment or variable files. Evaluating may not work correctly.	module="root" variables="db_host, db_password"
+2026-08-19T19:39:17+03:00	INFO	[terraform scanner] Scanning root module	file_path="modules/service"
+2026-08-19T19:39:17+03:00	WARN	[terraform parser] Variable values were not found in the environment or variable files. Evaluating may not work correctly.	module="root" variables="allowed_egress_cidrs, allowed_ingress_cidrs, secret_arn"
+2026-08-19T19:39:18+03:00	INFO	Detected config files	num=4
+
+Report Summary
+
+┌─────────────────────────┬───────────┬───────────────────┐
+│         Target          │   Type    │ Misconfigurations │
+├─────────────────────────┼───────────┼───────────────────┤
+│ modules/data            │ terraform │         0         │
+├─────────────────────────┼───────────┼───────────────────┤
+│ modules/data/main.tf    │ terraform │         0         │
+├─────────────────────────┼───────────┼───────────────────┤
+│ modules/service         │ terraform │         0         │
+├─────────────────────────┼───────────┼───────────────────┤
+│ modules/service/main.tf │ terraform │         0         │
+└─────────────────────────┴───────────┴───────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+==> VERIFY_BASE_URL not set; skipping deployed health checks
+
+All verification checks passed.
+VERIFY_PASS_EXIT=0
