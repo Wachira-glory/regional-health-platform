@@ -32,10 +32,6 @@ resource "aws_instance" "app" {
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.app.id]
 
-  metadata_options {
-    http_tokens = "required"
-  }
-
   root_block_device {
     encrypted = true
   }
