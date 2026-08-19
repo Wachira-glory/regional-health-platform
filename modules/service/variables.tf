@@ -29,3 +29,12 @@ variable "create_lb" {
   type        = bool
   default     = false
 }
+variable "allowed_ingress_cidrs" {
+  description = "CIDR blocks allowed to reach nginx. Callers must explicitly choose the trusted network range."
+  type        = list(string)
+
+  validation {
+    condition     = length(var.allowed_ingress_cidrs) > 0
+    error_message = "allowed_ingress_cidrs must contain at least one CIDR block."
+  }
+}

@@ -17,7 +17,7 @@ resource "aws_security_group" "app" {
     from_port   = var.nginx_port
     to_port     = var.nginx_port
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.allowed_ingress_cidrs
   }
   egress {
     from_port   = 0
