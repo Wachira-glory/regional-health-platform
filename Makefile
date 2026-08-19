@@ -1,10 +1,12 @@
 SHELL := /bin/bash
 
 VERIFY_BASE_URL ?=
+TF_ROOT_DIR ?=
+TF_CMD ?= tflocal
 
-.PHONY: verify verify-fmt verify-terraform verify-gitleaks verify-trivy verify-health
+.PHONY: verify verify-fmt verify-terraform verify-lint verify-plan verify-gitleaks verify-trivy verify-health
 
-verify: verify-fmt verify-terraform verify-gitleaks verify-trivy verify-health
+verify: verify-fmt verify-terraform verify-lint verify-plan verify-gitleaks verify-trivy verify-health
 	@echo
 	@echo "All verification checks passed."
 
@@ -18,6 +20,19 @@ verify-terraform:
 	@terraform -chdir=modules/data validate
 	@terraform -chdir=modules/service init -backend=false -input=false >/dev/null
 	@terraform -chdir=modules/service validate
+
+verify-lint:
+	@echo "==> Running TFLint"
+	@tflint --chdir=modules/data
+	@tflint --chdir=modules/service
+
+verify-plan:
+	@if [ -z "$(TF_ROOT_DIR)" ]; then \
+		echo "==> TF_ROOT_DIR not set; skipping deployed-state drift check"; \
+	else \
+		echo "==> Checking deployed-state drift in $(TF_ROOT_DIR)"; \
+		$(TF_CMD) -chdir="$(TF_ROOT_DIR)" plan -detailed-exitcode -input=false; \
+	fi
 
 verify-gitleaks:
 	@echo "==> Running Gitleaks"
