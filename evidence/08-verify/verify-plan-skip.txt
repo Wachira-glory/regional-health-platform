@@ -1,0 +1,2 @@
+==> TF_ROOT_DIR not set; skipping deployed-state drift check
+VERIFY_PLAN_SKIP_EXIT=0

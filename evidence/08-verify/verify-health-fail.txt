@@ -1,0 +1,6 @@
+==> Checking http://127.0.0.1:1/healthz
+curl: (7) Failed to connect to 127.0.0.1 port 1 after 0 ms: Couldn't connect to server
+==> Checking http://127.0.0.1:1/readyz
+curl: (7) Failed to connect to 127.0.0.1 port 1 after 0 ms: Couldn't connect to server
+make: *** [Makefile:46: verify-health] Error 7
+VERIFY_HEALTH_FAIL_EXIT=2
