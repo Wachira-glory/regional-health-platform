@@ -29,7 +29,13 @@ Prometheus target state is preserved in:
 
 ## Degraded Behaviour
 
-A database-dependent request was exercised during a degraded/error condition.
+A database-dependent request was exercised against the Aiven-backed runtime
+and produced a real application/database error:
+
+`ER_NO_SUCH_TABLE` — the `patients` table was not present in `defaultdb`.
+
+The database connection itself remained reachable, which was confirmed by
+`/readyz` returning HTTP 200.
 
 The dashboard showed:
 
@@ -50,7 +56,8 @@ Prometheus was configured with alerts for:
 - event-loop lag;
 - database errors.
 
-The database error condition triggered the `DatabaseErrorsDetected` alert.
+The `ER_NO_SUCH_TABLE` condition incremented `db_errors_total` and triggered
+the `DatabaseErrorsDetected` alert.
 
 ![Prometheus alert firing](prometheus-alert-firing.png)
 
@@ -60,8 +67,14 @@ The exact Prometheus rules used are preserved in:
 
 ## Recovery
 
-After the degraded condition ended, service behaviour returned toward the
-healthy baseline and the dashboard reflected recovery.
+After the test traffic stopped, the database error alert cleared from the
+active alert set. The application remained healthy throughout recovery:
+
+- `/healthz` returned HTTP 200;
+- `/readyz` returned HTTP 200;
+- the database connection remained reachable.
+
+The dashboard reflected the return toward the healthy baseline.
 
 ![Grafana recovery](grafana-recovery.png)
 
