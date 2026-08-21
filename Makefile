@@ -46,6 +46,7 @@ verify-health:
 	@if [ -z "$(VERIFY_BASE_URL)" ]; then \
 		echo "==> VERIFY_BASE_URL not set; skipping deployed health checks"; \
 	else \
+		set -e; \
 		echo "==> Checking $(VERIFY_BASE_URL)/healthz"; \
 		curl --fail --silent --show-error "$(VERIFY_BASE_URL)/healthz" >/dev/null; \
 		echo "==> Checking $(VERIFY_BASE_URL)/readyz"; \
