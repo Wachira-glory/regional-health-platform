@@ -1,0 +1,56 @@
+groups:
+  - name: regional-health-capacity
+    rules:
+
+      - alert: ApiHighP99Latency
+        expr: |
+          histogram_quantile(
+            0.99,
+            sum(rate(http_request_duration_seconds_bucket[5m])) by (le)
+          ) > 1
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API p99 latency is high"
+          description: "API p99 latency has exceeded 1 second for 2 minutes."
+
+      - alert: ApiHighErrorRate
+        expr: |
+          (
+            sum(rate(http_requests_total{status_code=~"5.."}[5m]))
+            /
+            clamp_min(sum(rate(http_requests_total[5m])), 0.001)
+          ) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API 5xx error rate is high"
+          description: "More than 5% of requests are returning 5xx responses."
+
+      - alert: ApiMemoryPressure
+        expr: process_resident_memory_bytes > 134217728
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API memory pressure is high"
+          description: "Resident memory has exceeded 128 MiB."
+
+      - alert: ApiEventLoopLag
+        expr: nodejs_eventloop_lag_p99_seconds > 0.1
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Node.js event loop lag is high"
+          description: "p99 event-loop lag has exceeded 100ms."
+
+      - alert: DatabaseErrorsDetected
+        expr: increase(db_errors_total[5m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: "Database errors detected"
+          description: "The application has recorded database errors during the last 5 minutes."
