@@ -1,0 +1,42 @@
+==> Checking Terraform formatting
+==> Validating Terraform modules
+[32m[1mSuccess![0m The configuration is valid.
+[0m
+[32m[1mSuccess![0m The configuration is valid.
+[0m
+==> Running TFLint
+==> TF_ROOT_DIR not set; skipping deployed-state drift check
+==> Running Gitleaks
+[90m1:55AM[0m [32mINF[0m [1m7 commits scanned.[0m
+[90m1:55AM[0m [32mINF[0m [1mscanned ~25320 bytes (25.32 KB) in 220ms[0m
+[90m1:55AM[0m [32mINF[0m [1mno leaks found[0m
+==> Running Trivy IaC scan
+2026-08-20T01:55:06Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-20T01:55:06Z	INFO	[checks-client] Need to update the checks bundle
+2026-08-20T01:55:06Z	INFO	[checks-client] Downloading the checks bundle...
+234.65 KiB / 234.65 KiB [------------------------------------------------------------] 100.00% ? p/s 100ms2026-08-20T01:55:08Z	INFO	[terraform scanner] Scanning root module	file_path="modules/data"
+2026-08-20T01:55:08Z	INFO	[terraform scanner] Scanning root module	file_path="modules/service"
+2026-08-20T01:55:08Z	WARN	[terraform parser] Variable values were not found in the environment or variable files. Evaluating may not work correctly.	module="root" variables="secret_arn"
+2026-08-20T01:55:08Z	INFO	Detected config files	num=4
+
+Report Summary
+
+┌─────────────────────────┬───────────┬───────────────────┐
+│         Target          │   Type    │ Misconfigurations │
+├─────────────────────────┼───────────┼───────────────────┤
+│ modules/data            │ terraform │         0         │
+├─────────────────────────┼───────────┼───────────────────┤
+│ modules/data/main.tf    │ terraform │         0         │
+├─────────────────────────┼───────────┼───────────────────┤
+│ modules/service         │ terraform │         0         │
+├─────────────────────────┼───────────┼───────────────────┤
+│ modules/service/main.tf │ terraform │         0         │
+└─────────────────────────┴───────────┴───────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+==> VERIFY_BASE_URL not set; skipping deployed health checks
+
+All verification checks passed.
+VERIFY_PASS_EXIT=0
