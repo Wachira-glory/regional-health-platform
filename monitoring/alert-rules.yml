@@ -30,7 +30,7 @@ groups:
           description: "More than 5% of requests are returning 5xx responses."
 
       - alert: ApiMemoryPressure
-        expr: process_resident_memory_bytes > 134217728
+        expr: process_resident_memory_bytes{job="capacity-api"} > 134217728
         for: 2m
         labels:
           severity: warning
